@@ -65,5 +65,5 @@ auth.php
 	    *some function*
     }, 'POST');
     
-    Router::export('/auth');
+    Route::export('/auth');
 
