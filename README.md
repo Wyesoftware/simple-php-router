@@ -36,4 +36,34 @@ If you want routing in your api route do this:
 
 index.php
 
-    enter code here
+    include ( 'modules/wyeRouter/router.php' );
+
+    use Wyesoftware\Router;
+
+    Router::use('/test', '/routes/test.php');
+    Router::use('/auth', '/routes/auth.php');
+    
+    Router::app('/api');
+    
+    Router::render( '/client/build/index.html' );
+
+test.php
+
+    echo 'testRoute work';
+
+auth.php
+
+    include ( 'modules/wyeRouter/route.php' );
+
+    use Wyesoftware\Route;
+
+    Route::do('/forgot/{email}', function($email){
+	    *some function with $email var*
+    });
+
+    Route::do('/register', function(){
+	    *some function*
+    }, 'POST');
+    
+    Router::export('/auth');
+
