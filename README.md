@@ -2,7 +2,7 @@
 
 Server-side PHP Router like express.js
 
-# Server-side index
+# Server-side index (Router)
 
     include ( *path to router.php file* );
 
