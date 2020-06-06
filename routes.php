@@ -21,32 +21,26 @@
                 foreach (self::$subRoutes as $subRoute) {
                     $parseSubRoutePath = explode("/", $subRoute['path']);
 
-                    if($parsePath[3] == $parseSubRoutePath[1]) {
-
-                        if(strtoupper($subRoute['method']) == $_SERVER['REQUEST_METHOD']) {
-                            http_response_code(200);
-                            preg_match_all('#{(.+?)}#is', $subRoute['path'], $matches);
-                            $parseParams = explode("/", $_SERVER['REQUEST_URI'], 5);
-                            $url = explode("/", $parseParams[4]);
-                            $params = array();
-                            if (count($matches[0]) == 1) {
-                                array_push($params, $url[0]);
-                            }
-                            else {
-                                for($i = 0; $i < count($matches[0]); $i++){
-                                    array_push($params, $url[$i]);
-                                }
-                            }
-    
-                            call_user_func_array($subRoute['function'], $params);
-                            break;
+                    if(($parsePath[3] == $parseSubRoutePath[1]) && (strtoupper($subRoute['method']) == strtoupper($_SERVER['REQUEST_METHOD']))) {
+                        http_response_code(200);
+                        preg_match_all('#{(.+?)}#is', $subRoute['path'], $matches);
+                        $parseParams = explode("/", $_SERVER['REQUEST_URI'], 5);
+                        $url = explode("/", $parseParams[4]);
+                        $params = array();
+                        if (count($matches[0]) == 1) {
+                            array_push($params, $url[0]);
                         }
                         else {
-                            http_response_code(403);
+                            for($i = 0; $i < count($matches[0]); $i++){
+                                array_push($params, $url[$i]);
+                            }
                         }
+
+                        call_user_func_array($subRoute['function'], $params);
+                        break;
                     }
                     else {
-                        http_response_code(400);
+                        http_response_code(403);
                     }
                 }
             }
