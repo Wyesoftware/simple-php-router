@@ -23,16 +23,20 @@
 
                     if(($parsePath[3] == $parseSubRoutePath[1]) && (strtoupper($subRoute['method']) == strtoupper($_SERVER['REQUEST_METHOD']))) {
                         http_response_code(200);
-                        preg_match_all('#{(.+?)}#is', $subRoute['path'], $matches);
-                        $parseParams = explode("/", $_SERVER['REQUEST_URI'], 5);
-                        $url = explode("/", $parseParams[4]);
+
                         $params = array();
-                        if (count($matches[0]) == 1) {
-                            array_push($params, $url[0]);
-                        }
-                        else {
-                            for($i = 0; $i < count($matches[0]); $i++){
-                                array_push($params, $url[$i]);
+                        $parseParams = explode("/", $_SERVER['REQUEST_URI'], 5);
+
+                        if (isset($parseParams[4])) {
+                            $url = explode("/", $parseParams[4]);
+                            preg_match_all('#{(.+?)}#is', $subRoute['path'], $matches);
+                            if (count($matches[0]) == 1) {
+                                array_push($params, $url[0]);
+                            }
+                            else {
+                                for($i = 0; $i < count($matches[0]); $i++){
+                                    array_push($params, $url[$i]);
+                                }
                             }
                         }
 
