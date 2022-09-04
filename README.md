@@ -1,4 +1,4 @@
-# expressPHPRouter
+# simple-php-router
 
 Server-side PHP Router like express.js
 
